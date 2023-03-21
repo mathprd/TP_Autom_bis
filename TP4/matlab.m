@@ -43,35 +43,40 @@ title("Tracé des lieux dans le plan de Nyquist pour différents k1")
 
 %% Pour tracer le lieu critique réel du relai
 
+% abs = [ -0.19 , -0.165 , -0.144 , -0.129 , -0.113 ] ;
+% ord = [ -0.086 , -0.075 , -0.0677 , -0.0645 , -0.0624 ] ;
+% 
 % figure(3) ;
 % title("Lieu critique du relais") ;
 % for k1 = 0.3:0.1:0.7
-%    L = tf(k*Km*Rr*Ps, [tau 1 0]) ;
+%    L = tf(k1*Km*Rr*Ps, [tau 1 0]) ;
 %    nyquist(L);
 %    hold on
 % end
-% 
+% plot (abs , ord, '-or') ;
+
 
 %% Pour diminuer l'amplitude par 2
 
-% k1 = 0.5 ;
-% beta = 0.1 ;
-% 
-% Gp = tf(Km*k1*Rr*Ps,[tau 1 0]) ;
-% 
-% figure(4)
-% for k2 = 0.1:0.1:1
-%    Gbis = tf(k1*Km*Rr*k2*beta, [tau 1]) ;
-%    G = Gp + Gbis ;
-%    nyquist(G);
-%    hold on
-% end
-% plot(reel, imaginaire, '-or');
+k1 = 0.5 ;
+beta = 0.1 ;
+
+Gp = tf(Km*k1*Rr*Ps,[tau 1 0]) ;
+
+figure(4)
+for k2 = 0.1:0.1:1
+   Gbis = tf(k1*Km*Rr*k2*beta, [tau 1]) ;
+   G = Gp + Gbis ;
+   nyquist(G);
+   hold on
+end
+plot(reel, imaginaire, '-or');
 
 %Pour diminuer par 2 l'amplitude dde l'auto-oscilation à k1=0.5 (X0 =
 %1.27), il faut choisir k2 = 0.7
 
 %% SIMULATION
+k1 = 0.5 ;
 simu = sim('fichier_simulink.slx') ;
 
 
